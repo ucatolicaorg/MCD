@@ -1,4 +1,4 @@
-# 🖥️🌸M.U.S.E - Maratón de Únicos Solvers y Estrategas 🌸🖥️
+# 🖥️M.U.S.E - Maratón de Únicos Solvers y Estrategas 🖥️
 _Inspirado en las musas de la creatividad y la resolución de problemas_
 ![image](https://github.com/user-attachments/assets/141f4f02-7a04-4a8e-86f8-c7fae60a91d0)
 
