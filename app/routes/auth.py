@@ -6,9 +6,15 @@ from app.models.schemas import UsuarioCreate, UsuarioResponse
 from app.auth.auth import hash_password, verify_password, create_access_token, oauth2_scheme
 from fastapi.security import OAuth2PasswordRequestForm
 
+
 router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
+# Clave secreta y algoritmo para JWT
+SECRET_KEY = "tu_clave_secreta"
+ALGORITHM = "HS256"
+
 def get_db():
+    """Función para obtener la sesión de la base de datos"""
     db = SessionLocal()
     try:
         yield db
@@ -44,6 +50,33 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = create_access_token(data={"sub": usuario.correo})
     return {"access_token": access_token, "token_type": "bearer"}
 
+# Función para obtener el usuario actual autenticado
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+    """Decodifica el token JWT y obtiene el usuario actual"""
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="No se pueden validar las credenciales",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        correo: str = payload.get("sub")
+        if correo is None:
+            raise credentials_exception
+    except JWTError:
+        raise credentials_exception
+    
+    usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
+    if usuario is None:
+        raise credentials_exception
+    return usuario
+
 @router.get("/me")
-def read_users_me(token: str = Depends(oauth2_scheme)):
-    return {"message": "Usuario autenticado", "token": token}
+def read_users_me(usuario: Usuario = Depends(get_current_user)):
+    """Devuelve los datos del usuario autenticado"""
+    return {
+        "nombre": usuario.nombre,
+        "correo": usuario.correo,
+        "es_profesor": usuario.es_profesor
+    }
+

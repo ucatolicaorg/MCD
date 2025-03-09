@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+# Definimos los modelos para Usuarios
 class UsuarioBase(BaseModel):
     nombre: str
     correo: str
@@ -9,6 +10,20 @@ class UsuarioCreate(UsuarioBase):
     password: str
 
 class UsuarioResponse(UsuarioBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+# Definimos los modelos para Competencias
+class CompetenciaBase(BaseModel):
+    nombre: str
+    descripcion: str
+
+class CompetenciaCreate(CompetenciaBase):
+    pass
+
+class CompetenciaResponse(CompetenciaBase):
     id: int
 
     class Config:
