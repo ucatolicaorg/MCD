@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+import jwt
+from jwt import PyJWTError
 from app.database import SessionLocal
 from app.models.usuarios import Usuario
 from app.models.schemas import UsuarioCreate, UsuarioResponse
@@ -9,9 +11,6 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
-def get_db():
-
-router = APIRouter(prefix="/auth", tags=["Autenticación"])
 
 # Clave secreta y algoritmo para JWT
 SECRET_KEY = "tu_clave_secreta"
@@ -19,7 +18,6 @@ ALGORITHM = "HS256"
 
 def get_db():
     """Función para obtener la sesión de la base de datos"""
-
     db = SessionLocal()
     try:
         yield db
@@ -55,11 +53,11 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = create_access_token(data={"sub": usuario.correo})
     return {"access_token": access_token, "token_type": "bearer"}
 
-<<<<<<< HEAD
+
 @router.get("/me")
 def read_users_me(token: str = Depends(oauth2_scheme)):
     return {"message": "Usuario autenticado", "token": token}
-=======
+
 # Función para obtener el usuario actual autenticado
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     """Decodifica el token JWT y obtiene el usuario actual"""
@@ -73,7 +71,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         correo: str = payload.get("sub")
         if correo is None:
             raise credentials_exception
-    except JWTError:
+    except PyJWTError:
         raise credentials_exception
     
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
@@ -90,4 +88,4 @@ def read_users_me(usuario: Usuario = Depends(get_current_user)):
         "es_profesor": usuario.es_profesor
     }
 
->>>>>>> gestion-avances
+

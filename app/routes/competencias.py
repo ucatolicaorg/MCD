@@ -9,7 +9,7 @@ router = APIRouter(prefix="/competencias", tags=["Competencias"])
 
 # 📌 Obtener todas las competencias (Disponible para todos)
 @router.get("/", response_model=list[CompetenciaResponse])
-def listar_competencias(db: Session = Depends(get_db)):
+def listar_competencia(db: Session = Depends(get_db)):
     return db.query(Competencia).all()
 
 # 📌 Crear una nueva competencia (Solo profesores)
