@@ -10,9 +10,12 @@ class UsuarioBase(BaseModel):
     correo: str
     es_profesor: bool = False
 
-class UsuarioCreate(UsuarioBase):
+class UsuarioCreate(BaseModel):
+    nombre: str
+    correo: str
     password: str
-
+    es_profesor: bool = False
+    
 class UsuarioResponse(UsuarioBase):
     id: int
 
