@@ -1,0 +1,4 @@
+status                 # Verificar cambios
+git add .                  # Agregar todos los archivos modificados
+git commit -m "Mensaje"    # Guardar cambios con una descripción
+git push origin mi-nueva-rama  # Subir cambios a GitHub

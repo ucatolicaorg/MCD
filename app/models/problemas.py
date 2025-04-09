@@ -1,0 +1,13 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+from app.database import Base
+
+class Problema(Base):
+    __tablename__ = "problemas"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String, index=True)
+    descripcion = Column(String)
+    competencia_id = Column(Integer, ForeignKey("competencias.id"))
+    
+    competencia = relationship("Competencia", back_populates="problemas")
