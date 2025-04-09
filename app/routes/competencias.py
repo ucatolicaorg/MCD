@@ -18,11 +18,19 @@ def crear_competencia(competencia: CompetenciaCreate, db: Session = Depends(get_
     if not usuario.es_profesor:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Solo los profesores pueden crear competencias.")
     
-    nueva_competencia = Competencia(**competencia.dict())
+    # Aquí asignamos el ID del profesor que está autenticado
+    nueva_competencia = Competencia(
+        nombre=competencia.nombre,
+        descripcion=competencia.descripcion,
+        profesor_id=usuario.id,  # Asignamos el ID del profesor
+        usuario_id=usuario.id  # Puedes asignar el usuario_id si lo necesitas
+    )
+    
     db.add(nueva_competencia)
     db.commit()
     db.refresh(nueva_competencia)
     return nueva_competencia
+
 
 # 📌 Editar competencia (Solo profesores)
 @router.put("/{id}", response_model=CompetenciaResponse)
