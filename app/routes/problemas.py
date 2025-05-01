@@ -12,7 +12,8 @@ def crear_problema(problema: ProblemaCreate, db: Session = Depends(get_db)):
     nuevo_problema = Problema(
         titulo=problema.titulo,
         descripcion=problema.descripcion,
-        competencia_id=problema.competencia_id
+        competencia_id=problema.competencia_id,
+        puntos_problema=problema.puntos_problema
     )
     db.add(nuevo_problema)
     db.commit()

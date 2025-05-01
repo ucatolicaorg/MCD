@@ -8,5 +8,6 @@ class Problema(Base):
     id = Column(Integer, primary_key=True, index=True)
     titulo = Column(String, index=True)
     descripcion = Column(String)
+    puntos_problema = Column(Integer)
     competencia_id = Column(Integer, ForeignKey("competencias.id"))   
     competencia = relationship("Competencia", back_populates="problemas")

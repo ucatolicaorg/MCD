@@ -20,7 +20,7 @@ class UsuarioResponse(UsuarioBase):
     id: int
 
     class Config:
-        from_attributes = True  # ✅ Compatible con Pydantic V2
+        from_attributes = True  
 
 # ------------------------------
 # Modelos para Competencias
@@ -36,36 +36,38 @@ class CompetenciaResponse(CompetenciaBase):
     id: int
 
     class Config:
-        from_attributes = True  # ✅ Compatible con Pydantic V2
+        from_attributes = True  
 
 # ------------------------------
 # Modelos para Avances
 # ------------------------------
 class AvanceBase(BaseModel):
     estudiante_id: int
-    competencia: str  # Si es un nombre de competencia, puedes mantenerlo como str
-    porcentaje_avance: float  # Debe ser un porcentaje, se usa float
+    competencia: str  
+    porcentaje_avance: float  
 
 class AvanceCreate(AvanceBase):
     pass
 
 class AvanceUpdate(BaseModel):
-    porcentaje_avance: float  # Solo permite actualizar el porcentaje de avance
+    porcentaje_avance: float  
 
 class AvanceResponse(AvanceBase):
     id: int
 
     class Config:
-        from_attributes = True  # ✅ Compatible con Pydantic V2
+        from_attributes = True  
 
 # ------------------------------
 # Modelos para Problemas
 # ------------------------------
 class ProblemaBase(BaseModel):
-    competencia_id: int
+    id: int
+    titulo: str
     descripcion: str
-    fecha_creacion: datetime  # Usar datetime para la fecha
-
+    puntos_problema: int
+    competencia_id: int
+    
 class ProblemaCreate(ProblemaBase):
     pass
 
@@ -73,7 +75,7 @@ class ProblemaResponse(ProblemaBase):
     id: int
 
     class Config:
-        from_attributes = True  # ✅ Compatible con Pydantic V2
+        from_attributes = True  
 
 # ------------------------------
 # Modelos para Premios
@@ -81,16 +83,16 @@ class ProblemaResponse(ProblemaBase):
 class PremioBase(BaseModel):
     estudiante_id: int
     descripcion: str
-    fecha_otorgado: date  # Usamos date para la fecha de otorgado
+    fecha_otorgado: date  
 
 class PremioCreate(PremioBase):
-    nombre: str  # Incluir nombre al crear el premio
+    nombre: str  
 
 class PremioResponse(PremioBase):
-    id: int  # El ID será asignado por la base de datos
+    id: int  
 
     class Config:
-        from_attributes = True  # ✅ Compatible con Pydantic V2
+        from_attributes = True  
 
 
 
