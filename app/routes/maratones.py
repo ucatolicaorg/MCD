@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.models.maratones import Maraton, Problema
-from app.schemas import MaratonCreate, MaratonResponse
+from app.models.schemas import MaratonCreate, MaratonResponse
 from app.database import get_db
 
 router = APIRouter(prefix="/maratones", tags=["Maratones"])
