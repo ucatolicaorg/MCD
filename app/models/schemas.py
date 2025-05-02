@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from typing import Optional
-from datetime import datetime, date
+from typing import List
+from datetime import date
 
 # ------------------------------
 # Modelos para Usuarios
@@ -93,6 +93,39 @@ class PremioResponse(PremioBase):
 
     class Config:
         from_attributes = True  
+
+# ------------------------------
+# Modelos para Maratones
+# ------------------------------
+class ProblemaBase(BaseModel):
+    descripcion: str
+    puntos_problema: int
+
+class ProblemaCreate(ProblemaBase):
+    pass
+
+class ProblemaResponse(ProblemaBase):
+    id: int
+
+    class Config:
+        orm_mode = True  # Esto es necesario para la conversión a modelos ORM
+
+class MaratonCreate(BaseModel):
+    nombre: str
+    descripcion: str
+    tiempo_limite: int  # Tiempo en minutos
+    problemas: List[ProblemaCreate]  # Lista de problemas
+
+class MaratonResponse(BaseModel):
+    id: int
+    nombre: str
+    descripcion: str
+    tiempo_limite: int
+    problemas: List[ProblemaResponse]  # Lista de problemas asociados
+
+    class Config:
+        orm_mode = True  # Para que FastAPI pueda convertir a ORM
+
 
 
 
