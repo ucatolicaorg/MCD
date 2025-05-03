@@ -21,7 +21,39 @@ class UsuarioResponse(UsuarioBase):
 
     class Config:
         from_attributes = True  
+# ------------------------------
+# Modelos para Maratones
+# ------------------------------
+class ProblemaMaratonBase(BaseModel):
+    descripcion: str
+    puntos_problema: int
 
+class ProblemaMaratonCreate(ProblemaMaratonBase):
+    pass
+
+class ProblemaMaratonResponse(ProblemaMaratonBase):
+    id: int
+    maraton_id: int
+    
+    class Config:
+        from_attributes = True
+
+class MaratonBase(BaseModel):
+    nombre: str
+    descripcion: str
+    tiempo_limite: int
+    fecha_inicio: datetime
+    fecha_fin: datetime
+
+class MaratonCreate(MaratonBase):
+    problemas: list[ProblemaMaratonCreate] = []
+
+class MaratonResponse(MaratonBase):
+    id: int
+    problemas: list[ProblemaMaratonResponse] = []
+    
+    class Config:
+        from_attributes = True
 # ------------------------------
 # Modelos para Competencias
 # ------------------------------
@@ -92,8 +124,4 @@ class PremioResponse(PremioBase):
     id: int  
 
     class Config:
-        from_attributes = True  
-
-
-
-
+        from_attributes = True

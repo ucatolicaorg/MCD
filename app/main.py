@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from app.routes.auth import router as auth_router
 from app.routes.competencias import router as competencias_router
 from app.routes.problemas import router as problemas_router
+from app.routes.maratones import router as maratones_router
 from app.routes.avances import router as avances_router
 from app.routes.premios import router as premios_router
 from app.routes.resolver_problemas import router as resolver_problema_router
@@ -39,6 +40,7 @@ app.include_router(auth_router, prefix="/auth", tags=["Autenticación"])
 app.include_router(competencias_router, prefix="/competencias", tags=["Competencias"])
 app.include_router(problemas_router, prefix="/problemas", tags=["Problemas"])
 app.include_router(avances_router, prefix="/avances", tags=["Avances"])
+app.include_router(maratones_router, prefix="/maratones", tags=["Maratones"])
 app.include_router(premios_router, prefix="/premios", tags=["Premios"])
 app.include_router(resolver_problema_router, prefix="/resolver", tags=["Resolver Problemas"])
 

@@ -10,4 +10,5 @@ class Problema(Base):
     descripcion = Column(String)
     puntos_problema = Column(Integer)
     competencia_id = Column(Integer, ForeignKey("competencias.id"))   
+    
     competencia = relationship("Competencia", back_populates="problemas")
